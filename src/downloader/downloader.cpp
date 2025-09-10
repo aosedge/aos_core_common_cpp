@@ -28,9 +28,13 @@ Downloader::~Downloader()
     mCondVar.notify_all();
 }
 
-Error Downloader::Download(const String& url, const String& path, aos::downloader::DownloadContent contentType)
+Error Downloader::Download(const String& url, const String& path, cloudprotocol::DownloadTarget targetType,
+    const String& targetID, const String& version)
 {
-    LOG_DBG() << "Start download: url=" << url << ", path=" << path << ", contentType=" << contentType;
+    (void)targetID;
+    (void)version;
+
+    LOG_DBG() << "Start download: url=" << url << ", path=" << path << ", contentType=" << targetType;
 
     return RetryDownload(url, path);
 }
