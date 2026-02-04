@@ -33,10 +33,13 @@ public:
      *
      * @param url URL.
      * @param path path to file.
-     * @param contentType content type.
+     * @param targetType target type.
+     * @param targetID target ID.
+     * @param version version.
      * @return Error.
      */
-    Error Download(const String& url, const String& path, aos::downloader::DownloadContent contentType) override;
+    Error Download(const String& url, const String& path, cloudprotocol::DownloadTarget targetType,
+        const String& targetID = "", const String& version = "") override;
 
 private:
     constexpr static std::chrono::milliseconds cDelay {1000};

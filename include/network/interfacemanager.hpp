@@ -10,6 +10,7 @@
 #include <functional>
 #include <optional>
 #include <string>
+#include <vector>
 
 #include <sys/socket.h>
 
@@ -203,7 +204,7 @@ public:
      * @param[out] routes routes.
      * @return Error.
      */
-    Error GetRouteList(Array<RouteInfo>& routes) const;
+    Error GetRouteList(std::vector<RouteInfo>& routes) const;
 
     /**
      * Adds link.
@@ -247,8 +248,6 @@ private:
 
     using LinkDeleter = std::function<void(rtnl_link*)>;
     using UniqueLink  = std::unique_ptr<rtnl_link, LinkDeleter>;
-
-    static constexpr size_t cMaxRouteCount = 20;
 
     RetWithError<int>                 GetMasterInterfaceIndex() const;
     RetWithError<UniqueNetlinkSocket> CreateNetlinkSocket() const;

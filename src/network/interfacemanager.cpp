@@ -437,7 +437,7 @@ Error InterfaceManager::SetMasterLink(const String& ifname, const String& master
     return ErrorEnum::eNone;
 }
 
-Error InterfaceManager::GetRouteList(Array<RouteInfo>& routes) const
+Error InterfaceManager::GetRouteList(std::vector<RouteInfo>& routes) const
 {
     LOG_DBG() << "List routes";
 
@@ -475,9 +475,7 @@ Error InterfaceManager::GetRouteList(Array<RouteInfo>& routes) const
             }
         }
 
-        if (err = routes.PushBack(info); !err.IsNone()) {
-            return AOS_ERROR_WRAP(err);
-        }
+        routes.push_back(std::move(info));
     }
 
     return ErrorEnum::eNone;
@@ -574,7 +572,7 @@ RetWithError<int> InterfaceManager::GetMasterInterfaceIndex() const
 {
     LOG_DBG() << "Get master interface index";
 
-    StaticArray<RouteInfo, cMaxRouteCount> routes;
+    std::vector<RouteInfo> routes;
 
     if (auto err = GetRouteList(routes); !err.IsNone()) {
         return {-1, err};
